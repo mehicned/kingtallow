@@ -1,0 +1,84 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<footer class="mt-24 border-t border-border/70 bg-card/70 backdrop-blur-sm">
+	<div class="section-shell">
+		<div class="grid gap-10 pt-4 md:grid-cols-3">
+			<div class="space-y-4">
+				<div class="flex items-center gap-3">
+					<div class="h-11 w-11 overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft">
+						<img src="/king.png" alt="King Tallow crown logo" class="h-full w-full object-cover" />
+					</div>
+					<div class="leading-tight">
+						<p class="font-display text-lg text-foreground">{SITE_TITLE}</p>
+						<p class="text-xs text-muted-foreground">Beef tallow, clarified.</p>
+					</div>
+				</div>
+				<p class="max-w-md text-sm text-muted-foreground">
+					From render to table, we share the science, flavor, and craft of working with grass-fed beef tallow.
+				</p>
+				<div class="flex gap-2">
+					<a
+						class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 text-foreground transition hover:-translate-y-[1px] hover:border-primary hover:text-primary"
+						href="https://instagram.com"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="text-xs font-semibold">IG</span>
+					</a>
+					<a
+						class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 text-foreground transition hover:-translate-y-[1px] hover:border-primary hover:text-primary"
+						href="https://twitter.com"
+						target="_blank"
+						rel="noreferrer"
+					>
+						<span class="text-xs font-semibold">X</span>
+					</a>
+					<a
+						class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 text-foreground transition hover:-translate-y-[1px] hover:border-primary hover:text-primary"
+						href="mailto:contact@kingtallow.com"
+					>
+						<span class="text-xs font-semibold">Mail</span>
+					</a>
+				</div>
+			</div>
+
+			<div class="grid gap-4 md:col-span-2 md:grid-cols-2 md:gap-8">
+				<div>
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Navigate</p>
+					<div class="mt-3 flex flex-col gap-2 text-sm text-foreground/80">
+						<a class="hover:text-primary" href="/">Home</a>
+						<a class="hover:text-primary" href="/resources">Resources</a>
+						<a class="hover:text-primary" href="/about">About</a>
+					</div>
+				</div>
+				<div>
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Quick Links</p>
+					<div class="mt-3 flex flex-col gap-2 text-sm text-foreground/80">
+						<a class="hover:text-primary" href="/blog/first-post">Rendering basics</a>
+						<a class="hover:text-primary" href="/blog/second-post">Tallow in skincare</a>
+						<a class="hover:text-primary" href="/blog/third-post">Cooking with depth</a>
+					</div>
+				</div>
+				<div class="md:col-span-2">
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Contact</p>
+					<p class="mt-3 max-w-xl text-sm text-muted-foreground">
+						For partnerships, interviews, or to share your favorite render, reach us at
+						<a class="ml-1 text-primary hover:text-secondary" href="mailto:contact@kingtallow.com">
+							contact@kingtallow.com
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground">
+			<span>(c) {new Date().getFullYear()} {SITE_TITLE}. All rights reserved.</span>
+			<span class="flex items-center gap-2">
+				<span class="h-2 w-2 rounded-full bg-primary"></span>
+				Nourish simply. Render slowly.
+			</span>
+		</div>
+	</div>
+</footer>

@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--background: 52 92% 96%;
+	--foreground: 88 38% 15%;
+	--card: 52 96% 98%;
+	--card-foreground: 88 38% 15%;
+	--popover: 52 96% 98%;
+	--popover-foreground: 88 38% 15%;
+	--primary: 28 67% 44%;
+	--primary-foreground: 52 96% 97%;
+	--secondary: 73 32% 32%;
+	--secondary-foreground: 52 96% 94%;
+	--muted: 60 32% 90%;
+	--muted-foreground: 88 20% 32%;
+	--accent: 32 65% 62%;
+	--accent-foreground: 52 96% 18%;
+	--destructive: 8 72% 36%;
+	--destructive-foreground: 52 96% 98%;
+	--border: 73 25% 78%;
+	--input: 73 25% 78%;
+	--ring: 28 67% 44%;
+	--radius: 16px;
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground antialiased font-sans;
+		background-image:
+			linear-gradient(180deg, rgba(254, 250, 224, 0.65) 0%, rgba(255, 255, 255, 0.92) 45%, rgba(240, 233, 204, 0.65) 100%),
+			var(--pattern, radial-gradient(circle at 10% 20%, rgba(188, 108, 37, 0.1) 0, transparent 28%));
+		min-height: 100vh;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-display text-foreground tracking-tight;
+		letter-spacing: -0.02em;
+	}
+
+	a {
+		@apply text-primary transition-colors;
+	}
+
+	a:hover {
+		@apply text-secondary;
+	}
+
+	::selection {
+		background-color: hsl(var(--accent) / 0.2);
+	}
+}
+
+@layer components {
+	.section-shell {
+		@apply mx-auto w-full max-w-6xl px-4 py-12 md:py-16;
+	}
+
+	.surface-card {
+		@apply rounded-3xl border bg-card/75 shadow-soft backdrop-blur-sm;
+	}
+
+	.prose-styled {
+		@apply prose prose-lg max-w-none font-serif text-foreground/90;
+	}
+
+	.prose-styled a {
+		@apply text-primary underline-offset-4 hover:text-secondary;
+	}
+
+	.prose-styled h2,
+	.prose-styled h3 {
+		@apply font-display text-foreground;
+	}
+
+	.header-shell {
+		@apply mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 md:py-4;
+	}
+}

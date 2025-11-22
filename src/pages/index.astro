@@ -1,0 +1,291 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const heroPoints = [
+	{
+		title: 'Neutral depth',
+		detail: 'Clean, savory fat that carries flavor without smoke.',
+	},
+	{
+		title: 'Stable by design',
+		detail: 'High smoke point and naturally shelf-stable.',
+	},
+	{
+		title: 'Circular kitchen',
+		detail: 'Use every trim: no waste, just nourishment.',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="space-y-20 pb-24">
+			<section class="section-shell grid gap-10 md:grid-cols-[1.1fr,0.9fr] md:items-center">
+				<div class="space-y-6">
+					<Badge className="w-fit" variant="sunlit">Grass-fed and slow rendered</Badge>
+					<h1 class="text-4xl font-display leading-tight text-foreground md:text-5xl">
+						Beef tallow, without the mystery.
+					</h1>
+					<p class="max-w-2xl text-lg text-foreground/80 md:text-xl">
+						{SITE_DESCRIPTION} Recipes, skincare experiments, and zero-waste rituals from the King Tallow
+						kitchen.
+					</p>
+					<div class="flex flex-wrap gap-3">
+						<Button size="lg" asChild>
+							<a href="/resources">View resources</a>
+						</Button>
+						<Button size="lg" variant="outline" asChild>
+							<a href="/blog/first-post">Rendering guide</a>
+						</Button>
+					</div>
+					<div class="grid gap-4 sm:grid-cols-2">
+						<div class="surface-card flex items-center justify-between rounded-2xl border p-4">
+							<div>
+								<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+									Smoke point
+								</p>
+								<p class="text-2xl font-display text-foreground">400&deg;F+</p>
+							</div>
+							<div class="h-12 w-12 rounded-full bg-primary/15 ring-2 ring-primary/30"></div>
+						</div>
+						<div class="surface-card flex items-center justify-between rounded-2xl border p-4">
+							<div>
+								<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+									Hands-on batches
+								</p>
+								<p class="text-2xl font-display text-foreground">Every week</p>
+							</div>
+							<div class="h-12 w-12 rounded-full bg-secondary/15 ring-2 ring-secondary/30"></div>
+						</div>
+					</div>
+				</div>
+				<div class="surface-card relative overflow-hidden border p-6 md:p-8">
+					<div
+						class="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-primary/15 blur-3xl"
+						aria-hidden="true"
+					></div>
+					<div
+						class="absolute -right-16 bottom-0 h-40 w-40 rounded-full bg-secondary/20 blur-3xl"
+						aria-hidden="true"
+					></div>
+					<div class="relative space-y-4">
+						<img
+							class="h-64 w-full rounded-2xl border border-border/70 object-cover shadow-soft md:h-72"
+							src="/tallow.png"
+							alt="Rendered tallow in a warm kitchen"
+							loading="eager"
+						/>
+						<div class="rounded-2xl border border-border/70 bg-background/70 p-5 backdrop-blur">
+							<p class="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+								Rendering ritual
+							</p>
+							<div class="mt-3 grid gap-3">
+								{
+									heroPoints.map((point) => (
+										<div class="flex gap-3">
+											<div
+												class="mt-1 flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary"
+											>
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4">
+													<path
+														d="M5 13.5 9 17l10-10"
+														stroke="currentColor"
+														stroke-width="1.8"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+													/>
+												</svg>
+											</div>
+											<div>
+												<p class="text-base font-semibold text-foreground">{point.title}</p>
+												<p class="text-sm text-muted-foreground">{point.detail}</p>
+											</div>
+										</div>
+									))
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section-shell space-y-6">
+				<div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+					<div class="space-y-2">
+						<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+							Latest dispatches
+						</p>
+						<h2 class="text-3xl font-display leading-tight text-foreground md:text-4xl">Latest resources</h2>
+						<p class="max-w-2xl text-muted-foreground">
+							Practical guides, reliable recipes, and skin-friendly experiments we use in our own kitchen.
+						</p>
+					</div>
+					<Button variant="outline" asChild>
+						<a href="/resources">Browse all resources</a>
+					</Button>
+				</div>
+				<div class="grid gap-6 md:grid-cols-3">
+					{
+						posts.map((post, index) => {
+							const href = `/blog/${post.id}/`;
+							const hero = post.data.heroImage;
+							return (
+								<a class="group block h-full no-underline" href={href}>
+									<Card className="h-full transition duration-200 hover:-translate-y-1 hover:border-primary/60">
+										{hero && (
+											<div class="overflow-hidden rounded-2xl border border-border/60">
+												<img
+													class="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+													src={hero}
+													alt=""
+													loading="lazy"
+												/>
+											</div>
+										)}
+										<CardHeader className="space-y-2">
+											<Badge className="w-fit" variant={index === 0 ? 'sunlit' : 'neutral'}>
+												{index === 0 ? 'Featured' : 'New'}
+											</Badge>
+											<CardTitle className="text-2xl leading-tight">{post.data.title}</CardTitle>
+											<CardDescription>{post.data.description}</CardDescription>
+										</CardHeader>
+										<CardContent className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
+											<FormattedDate date={post.data.pubDate} />
+											<span class="inline-flex items-center gap-1 font-semibold text-foreground transition group-hover:text-primary">
+												Read <span aria-hidden="true">&rarr;</span>
+											</span>
+										</CardContent>
+									</Card>
+								</a>
+							);
+						})
+					}
+				</div>
+			</section>
+
+			<section class="section-shell space-y-8">
+				<div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+					<div>
+						<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+							The King Tallow way
+						</p>
+						<h2 class="text-3xl font-display leading-tight text-foreground md:text-4xl">
+							Bright, functional, and beautifully simple
+						</h2>
+					</div>
+					<Badge className="w-fit" variant="neutral">Kitchen, apothecary, homestead</Badge>
+				</div>
+				<div class="grid gap-4 md:grid-cols-3">
+					<Card className="h-full border-none bg-card/80">
+						<CardHeader>
+							<Badge className="w-fit" variant="neutral">In the kitchen</Badge>
+							<CardTitle>Flavor without flare-ups</CardTitle>
+							<CardDescription>
+								Saute, sear, and bake with a fat that stays calm under heat and lets ingredients shine.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li>- Golden roast vegetables with crisp edges</li>
+								<li>- Flaky pastries that stay tender</li>
+								<li>- Cast-iron searing that never smokes</li>
+							</ul>
+						</CardContent>
+					</Card>
+					<Card className="h-full border-none bg-card/80">
+						<CardHeader>
+							<Badge className="w-fit" variant="sunlit">Skin and salves</Badge>
+							<CardTitle>Gentle nourishment</CardTitle>
+							<CardDescription>
+								Small-batch balms, soaps, and salves that lean on tallow's compatibility with skin.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li>- Whipped tallow balm recipes</li>
+								<li>- Clean-burning candles with soft glow</li>
+								<li>- Infusions with herbs and wildflowers</li>
+							</ul>
+						</CardContent>
+					</Card>
+					<Card className="h-full border-none bg-card/80">
+						<CardHeader>
+							<Badge className="w-fit" variant="outline">Low-waste craft</Badge>
+							<CardTitle>Regenerative mindset</CardTitle>
+							<CardDescription>
+								From sourcing to storage, we close loops and honor the whole animal.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li>- Render guides for every season</li>
+								<li>- Storage systems that fit your space</li>
+								<li>- Zero-waste ideas for every batch</li>
+							</ul>
+						</CardContent>
+					</Card>
+				</div>
+			</section>
+
+			<section class="section-shell space-y-8">
+				<div class="flex flex-col gap-3">
+					<p class="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">Process</p>
+					<h2 class="text-3xl font-display leading-tight text-foreground md:text-4xl">
+						From trimming to glass jar
+					</h2>
+					<p class="max-w-2xl text-muted-foreground">
+						A simple, repeatable roadmap to render clean, fragrant tallow every single time.
+					</p>
+				</div>
+				<div class="grid gap-4 md:grid-cols-4">
+					{
+						[
+							{
+								title: '1. Source intentionally',
+								body: 'Grass-fed, local, and firm golden fat sets a strong foundation.',
+							},
+							{
+								title: '2. Render low and slow',
+								body: 'Gentle heat, wide pot, and patient stirring for clean flavor.',
+							},
+							{
+								title: '3. Clarify and filter',
+								body: 'Fine mesh, cheesecloth, and time give you glass-clear tallow.',
+							},
+							{
+								title: '4. Store and use',
+								body: 'Pour into dry glass, label the batch, and keep cool or frozen.',
+							},
+						].map((step, idx) => (
+							<div class="surface-card h-full rounded-2xl border p-5">
+								<div class="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 font-bold text-primary">
+									{idx + 1}
+								</div>
+								<p class="font-display text-lg text-foreground">{step.title}</p>
+								<p class="mt-2 text-sm text-muted-foreground">{step.body}</p>
+							</div>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
