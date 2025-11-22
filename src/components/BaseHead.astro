@@ -4,7 +4,7 @@
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
 
 interface Props {
 	title: string;
@@ -15,6 +15,34 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = FallbackImage } = Astro.props;
+
+// Schema.org JSON-LD for Organization and WebSite
+const schemaOrgWebsite = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: SITE_TITLE,
+	description: SITE_DESCRIPTION,
+	url: SITE_URL,
+	potentialAction: {
+		'@type': 'SearchAction',
+		target: `${SITE_URL}/blog?q={search_term_string}`,
+		'query-input': 'required name=search_term_string',
+	},
+};
+
+const schemaOrgOrganization = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: SITE_TITLE,
+	url: SITE_URL,
+	logo: `${SITE_URL}/king.png`,
+	description: SITE_DESCRIPTION,
+	sameAs: [
+		// Add your social media profiles here
+		// 'https://twitter.com/kingtallow',
+		// 'https://instagram.com/kingtallow',
+	],
+};
 ---
 
 <!-- Global Metadata -->
@@ -57,3 +85,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaOrgWebsite)} />
+<script type="application/ld+json" set:html={JSON.stringify(schemaOrgOrganization)} />

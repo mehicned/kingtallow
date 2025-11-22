@@ -7,15 +7,49 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import { SITE_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, author, focusKeyphrase, keywords } = Astro.props;
+
+// Get the current URL path for the blog post
+const currentPath = Astro.url.pathname;
+
+// Schema.org JSON-LD for BlogPosting
+const schemaOrgBlogPosting = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description: description,
+	image: heroImage ? `${SITE_URL}${heroImage}` : `${SITE_URL}/king.png`,
+	datePublished: pubDate.toISOString(),
+	dateModified: updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+	author: {
+		'@type': 'Person',
+		name: author?.name ?? 'Miles Carter',
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'King Tallow',
+		logo: {
+			'@type': 'ImageObject',
+			url: `${SITE_URL}/king.png`,
+		},
+	},
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': `${SITE_URL}${currentPath}`,
+	},
+	keywords: keywords?.join(', ') ?? focusKeyphrase,
+};
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<!-- BlogPosting Schema -->
+		<script type="application/ld+json" set:html={JSON.stringify(schemaOrgBlogPosting)} />
 	</head>
 
 	<body>
