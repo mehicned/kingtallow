@@ -83,7 +83,15 @@ const schemaOrgBlogPosting = {
 					{
 						heroImage && (
 							<div class="overflow-hidden rounded-3xl border border-border/70 bg-card/80">
-								<img class="h-full w-full object-cover" src={heroImage} alt="" loading="lazy" />
+								<img
+									class="h-full w-full object-cover"
+									src={heroImage}
+									alt={title}
+									width="800"
+									height="500"
+									fetchpriority="high"
+									decoding="async"
+								/>
 							</div>
 						)
 					}
