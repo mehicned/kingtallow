@@ -10,6 +10,11 @@ import remarkGfm from 'remark-gfm';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://kingtallow.com',
+	image: {
+		service: {
+			entrypoint: 'astro/assets/services/sharp',
+		},
+	},
 	integrations: [
 		mdx({
 			remarkPlugins: [remarkGfm],
